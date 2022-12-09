@@ -1,0 +1,46 @@
+{
+  "name": "riebot-v5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "prebuild": "rm -r dist/",
+    "build": "tsc",
+    "postbuild": "cp -r lib/secrets dist/",
+    "prestart": "npm run build",
+    "start": "node --no-experimental-fetch -r source-map-support/register -r dotenv/config dist/index.js dotenv_config_path=./dist/secrets/.env"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Likely-Tim/Riebot-v5.git"
+  },
+  "author": "Timothy Wu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Likely-Tim/Riebot-v5/issues"
+  },
+  "homepage": "https://github.com/Likely-Tim/Riebot-v5#readme",
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "endOfLine": "lf"
+  },
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3",
+    "typescript": "^4.9.4",
+    "winston": "^3.8.2",
+    "winston-daily-rotate-file": "^4.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.12",
+    "prettier": "^2.8.1",
+    "source-map-support": "^0.5.21"
+  }
+}

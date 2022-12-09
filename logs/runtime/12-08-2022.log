@@ -1,0 +1,84 @@
+12-08-2022 21:04:37: error: uncaughtException: ENOENT: no such file or directory, scandir './commands'
+Error: ENOENT: no such file or directory, scandir './commands'
+    at readdirSync (node:fs:1451:3)
+    at file:///D:/Discord/Riebot-v5/dist/slash_refresh.js:19:30
+    at Generator.next (<anonymous>)
+    at file:///D:/Discord/Riebot-v5/dist/slash_refresh.js:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (file:///D:/Discord/Riebot-v5/dist/slash_refresh.js:3:12)
+    at refreshSlashCommands (file:///D:/Discord/Riebot-v5/dist/slash_refresh.js:16:12)
+    at file:///D:/Discord/Riebot-v5/dist/index.js:33:15
+    at Generator.next (<anonymous>)
+    at file:///D:/Discord/Riebot-v5/dist/index.js:7:71
+12-08-2022 21:07:03: error: uncaughtException: ENOENT: no such file or directory, scandir './commands'
+Error: ENOENT: no such file or directory, scandir './commands'
+    at readdirSync (node:fs:1451:3)
+    at file:///D:/Discord/Riebot-v5/dist/slash_refresh.js:19:30
+    at Generator.next (<anonymous>)
+    at file:///D:/Discord/Riebot-v5/dist/slash_refresh.js:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (file:///D:/Discord/Riebot-v5/dist/slash_refresh.js:3:12)
+    at refreshSlashCommands (file:///D:/Discord/Riebot-v5/dist/slash_refresh.js:16:12)
+    at file:///D:/Discord/Riebot-v5/dist/index.js:33:15
+    at Generator.next (<anonymous>)
+    at file:///D:/Discord/Riebot-v5/dist/index.js:7:71
+12-08-2022 21:19:26: error: uncaughtException: ENOENT: no such file or directory, scandir './commands'
+Error: ENOENT: no such file or directory, scandir './commands'
+    at readdirSync (node:fs:1451:3)
+    at D:\Discord\Riebot-v5\dist\slash_refresh.js:25:51
+    at Generator.next (<anonymous>)
+    at D:\Discord\Riebot-v5\dist\slash_refresh.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (D:\Discord\Riebot-v5\dist\slash_refresh.js:4:12)
+    at refreshSlashCommands (D:\Discord\Riebot-v5\dist\slash_refresh.js:22:12)
+    at D:\Discord\Riebot-v5\dist\index.js:59:59
+    at Generator.next (<anonymous>)
+    at D:\Discord\Riebot-v5\dist\index.js:31:71
+12-08-2022 21:23:50: error: uncaughtException: ENOENT: no such file or directory, scandir './commands'
+Error: ENOENT: no such file or directory, scandir './commands'
+    at readdirSync (node:fs:1451:3)
+    at D:\Discord\Riebot-v5\lib\slash_refresh.ts:11:35
+    at Generator.next (<anonymous>)
+    at D:\Discord\Riebot-v5\dist\slash_refresh.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (D:\Discord\Riebot-v5\dist\slash_refresh.js:4:12)
+    at refreshSlashCommands (D:\Discord\Riebot-v5\dist\slash_refresh.js:22:12)
+    at D:\Discord\Riebot-v5\lib\index.ts:27:29
+    at Generator.next (<anonymous>)
+    at D:\Discord\Riebot-v5\dist\index.js:31:71
+12-08-2022 21:26:04: error: uncaughtException: ENOENT: no such file or directory, scandir './commands'
+Error: ENOENT: no such file or directory, scandir './commands'
+    at readdirSync (node:fs:1451:3)
+    at D:\Discord\Riebot-v5\lib\slash_refresh.ts:12:35
+    at Generator.next (<anonymous>)
+    at D:\Discord\Riebot-v5\dist\slash_refresh.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (D:\Discord\Riebot-v5\dist\slash_refresh.js:4:12)
+    at refreshSlashCommands (D:\Discord\Riebot-v5\dist\slash_refresh.js:22:12)
+    at D:\Discord\Riebot-v5\lib\index.ts:27:29
+    at Generator.next (<anonymous>)
+    at D:\Discord\Riebot-v5\dist\index.js:31:71
+12-08-2022 21:27:52: info: Started refreshing 1 application (/) commands.
+12-08-2022 21:27:52: info: Successfully reloaded 1 application (/) commands.
+12-08-2022 21:27:52: error: uncaughtException: Cannot find module 'file://D:\Discord\Riebot-v5\dist\commands\ping.js'
+Require stack:
+- D:\Discord\Riebot-v5\dist\index.js
+Error: Cannot find module 'file://D:\Discord\Riebot-v5\dist\commands\ping.js'
+Require stack:
+- D:\Discord\Riebot-v5\dist\index.js
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:995:15)
+    at Function.Module._load (node:internal/modules/cjs/loader:841:27)
+    at Module.require (node:internal/modules/cjs/loader:1061:19)
+    at require (node:internal/modules/cjs/helpers:103:18)
+    at D:\Discord\Riebot-v5\lib\index.ts:35:52
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+12-08-2022 21:33:18: info: Started refreshing 1 application (/) commands.
+12-08-2022 21:33:18: info: Successfully reloaded 1 application (/) commands.
+12-08-2022 21:38:55: info: Started refreshing 1 application (/) commands.
+12-08-2022 21:38:55: info: Successfully reloaded 1 application (/) commands.
+12-08-2022 21:43:57: info: Started refreshing 1 application (/) commands.
+12-08-2022 21:43:57: info: Successfully reloaded 1 application (/) commands.
+12-08-2022 21:44:21: info: [Command] Executing ping
+12-08-2022 21:44:22: info: [Command] Executed ping Successfully
+12-08-2022 21:56:12: info: Started refreshing 1 application (/) commands.
+12-08-2022 21:56:12: info: Successfully reloaded 1 application (/) commands.
