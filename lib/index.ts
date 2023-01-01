@@ -1,13 +1,14 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import logger from './utils/logger.js';
-import { refreshSlashCommands } from './slash_refresh.js';
-import * as types from './types';
+import logger from './utils/logger';
+import initializeServer from './server';
+import { DiscordClient, Command } from './types';
+import { refreshSlashCommands } from './slash_refresh';
 import { Collection, Events, GatewayIntentBits } from 'discord.js';
 
 const DISCORD_CLIENT = process.env.DISCORD_TOKEN;
 
-const discordClient = new types.DiscordClient({
+const discordClient = new DiscordClient({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
 });
 
@@ -40,6 +41,7 @@ discordClient.on(Events.InteractionCreate, async (interaction) => {
 });
 
 async function startup() {
+  initializeServer();
   await refreshSlashCommands();
 
   discordClient.commands = new Collection();
@@ -48,7 +50,7 @@ async function startup() {
 
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
-    let command: types.Command = require(filePath);
+    let command: Command = require(filePath);
     discordClient.commands.set(command.data.name, command);
   }
 }

@@ -1,0 +1,55 @@
+Anilist Api uses graphql which means the structure of the response is highly dependant on the request. 
+This file lists the expectation of the request for each object. 
+Any deviation would require changes on all requests and adjustment in types.ts.
+
+Media {
+  popularity
+  format
+  title
+  episodes
+  nextAiringEpisode
+  airingSchedule
+  coverImage
+  siteUrl
+  stats
+}
+
+  Title {
+    romaji
+    english
+    native
+  }
+
+  NextAiringEpisode {
+    timeUntilAiring
+    airingAt
+    episode
+  }
+
+  AiringEpisode {
+    pageInfo {
+      hasNextPage
+    }
+    nodes {
+      timeUntilAiring
+      episode
+    }
+  }
+
+  CoverImage {
+    extraLarge
+    large
+    medium
+    color
+  }
+
+  Stats {
+    ScoreDistribution {
+      score
+      amount
+    }
+    StatusDistribution {
+      status 
+      amount
+    }
+  }
