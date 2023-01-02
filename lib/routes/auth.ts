@@ -121,8 +121,8 @@ router.get('/spotify/callback', async (request, response) => {
     await dbTokens.set(`spotifyAccess_${discordId}`, accessToken);
     await dbTokens.set(`spotifyRefresh_${discordId}`, refreshToken);
   } else {
-    await dbTokens.set('spotifyAccess', accessToken);
-    await dbTokens.set('spotifyRefresh', refreshToken);
+    await dbTokens.set('spotifyAccess_general', accessToken);
+    await dbTokens.set('spotifyRefresh_general', refreshToken);
   }
   if (redirectUrl) {
     response.redirect(redirectUrl);

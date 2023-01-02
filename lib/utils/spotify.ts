@@ -17,17 +17,15 @@ class Spotify {
     }
   }
 
-  async refreshToken(userId: string | undefined): Promise<boolean> {
-    let refreshToken;
-    if (userId) {
-      logger.info(`[Spotify] Refreshing token for user ${userId}`);
-      refreshToken = await dbTokens.get(`spotifyRefresh_${userId}`);
-    } else {
-      logger.info(`[Spotify] Refreshing general token`);
-      refreshToken = await dbTokens.get(`spotifyRefresh`);
-    }
+  async getAccessToken(userId: string) {
+    const accessToken = await dbTokens.get(`spotifyAccess_${userId}`);
+    return accessToken;
+  }
+
+  async refreshToken(userId: string): Promise<string> {
+    let refreshToken = await dbTokens.get(`spotifyRefresh_${userId}`);
     if (!refreshToken) {
-      return false;
+      throw new Error(`[Spotify] Missing refresh token for ${userId}`);
     }
     const url = 'https://accounts.spotify.com/api/token';
     const data: SpotifyRefreshTokenRequest = {
@@ -42,8 +40,7 @@ class Spotify {
       body: new URLSearchParams(data as unknown as Record<string, string>)
     });
     if (!response.ok) {
-      logger.error(`[Spotify] Refreshing token failed with status: ${response.status}`);
-      return false;
+      throw new Error(`[Spotify] Refreshing token failed with status: ${response.status}`);
     } else {
       logger.info(`[Spotify] Refreshed Token`);
       const body = (await response.json()) as SpotifyRefreshTokenResponse;
@@ -52,19 +49,20 @@ class Spotify {
       } else {
         await dbTokens.set(`spotifyAccess`, body.access_token);
       }
-      return true;
+      return body.access_token;
     }
   }
 
-  async currentlyPlaying(userId: string, isUri: boolean): Promise<string | undefined | null> {
+  async currentlyPlaying(userId: string, isUri: boolean, accessToken: string): Promise<string | undefined> {
     logger.info(`[Spotify] Getting playing track | URI: ${isUri}`);
-    const accessToken = await dbTokens.get(`spotifyAccess_${userId}`);
-    if (!accessToken) {
-      return null;
-    }
     const url = 'https://api.spotify.com/v1/me/player/currently-playing';
     let response = await sendGetRequest(url, accessToken);
     if (!response.ok) {
+      if (response.status === 401) {
+        logger.info(`[Spotify] Expired Token`);
+        accessToken = await this.refreshToken(userId);
+        return await this.currentlyPlaying(userId, isUri, accessToken);
+      }
       throw new Error(`[Spotify] Failed to get currently playing with status: ${response.status}`);
     } else {
       logger.info(`[Spotify] Got Currently Playing`);
