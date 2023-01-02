@@ -1,39 +1,67 @@
+import Keyv from 'keyv';
+import { KeyvFile } from 'keyv-file';
 import path from 'node:path';
-import { Level } from 'level';
 import logger from '../logger';
 
-const db = new Level(path.join(__dirname, '..', '..', '..', 'databases', 'web'));
-const animeShowUsers = db.sublevel('animeShowUsers');
+const db = new Keyv({
+  store: new KeyvFile({
+    filename: path.join(__dirname, '..', '..', '..', 'databases', 'web.json')
+  }),
+  namespace: 'default'
+});
+
+const animeShowUsers = new Keyv({
+  store: new KeyvFile({
+    filename: path.join(__dirname, '..', '..', '..', 'databases', 'web.json')
+  }),
+  namespace: 'users'
+});
 
 export async function set(key: string, value: string): Promise<void> {
-  logger.info(`[DB] Setting key '${key}' with value '${value}'`);
-  await db.put(key, value);
-  logger.info(`[DB] Set key, value`);
+  logger.info(`[Web DB] Setting key '${key}' with value '${value}'`);
+  await db.set(key, value);
+  logger.info(`[Web DB] Set key, value`);
 }
 
 export async function get(key: string): Promise<string | null> {
   try {
-    logger.info(`[DB] Getting value with key ${key}`);
+    logger.info(`[Web DB] Getting value with key ${key}`);
     const value = await db.get(key);
-    logger.info(`[DB] Got value`);
+    logger.info(`[Web DB] Got value`);
     return value;
   } catch (error) {
-    logger.error(`[DB] Error getting value with key ${key}`);
+    logger.error(`[Web DB] Error getting value with key ${key}`);
     return null;
   }
 }
 
 export async function setAnimeShowUser(key: string, value: string): Promise<void> {
-  logger.info(`[DB] Setting key '${key}' with value '${value}'`);
-  await animeShowUsers.put(key, value);
-  logger.info(`[DB] Set key, value`);
+  logger.info(`[Web DB] Setting key '${key}' with value '${value}'`);
+  await animeShowUsers.set(key, value);
+  if (await animeShowUsers.has('users')) {
+    const users = JSON.parse(await animeShowUsers.get('users'));
+    users.push(key);
+    await animeShowUsers.set('users', JSON.stringify(users));
+  } else {
+    await animeShowUsers.set('users', JSON.stringify([key]));
+  }
+  logger.info(`[Web DB] Set key, value`);
 }
 
-export async function getAllAnimeShowUser(): Promise<[[string, string]] | null> {
+export async function getAllAnimeShowUser(): Promise<[string, string][] | null> {
   try {
-    return await animeShowUsers.iterator().all();
+    logger.info(`[Web DB] Getting All Anime Show Users`);
+    const usersArray: [string, string][] = [];
+    if (await animeShowUsers.has('users')) {
+      const users = JSON.parse(await animeShowUsers.get('users'));
+      for (const user of users) {
+        usersArray.push([user, await animeShowUsers.get(user)]);
+      }
+    }
+    return usersArray;
   } catch (error) {
-    logger.error(`[DB] Error getting anime show users`);
+    console.log(error);
+    logger.error(`[Web DB] Error getting anime show users`);
     return null;
   }
 }

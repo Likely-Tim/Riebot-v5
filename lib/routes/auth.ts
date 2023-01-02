@@ -36,7 +36,7 @@ router.get('/discord', async (request, response) => {
   const state = randomStringGenerator(64);
   response.cookie('task', request.query.task, { sameSite: 'lax', maxAge: 600000 });
   response.cookie('discordStateId', id, { sameSite: 'lax', maxAge: 600000 });
-  await dbTokens.set(`${id}DiscordState`, state);
+  await dbTokens.set(`${id}_DiscordState`, state, 3600000);
   response.redirect(
     `https://discord.com/oauth2/authorize?response_type=code&client_id=${DISCORD_CLIENT_ID}&scope=identify&state=${state}&redirect_uri=${BASE_URL_ENCODED}auth%2Fdiscord%2Fcallback&prompt=consent`
   );
@@ -69,7 +69,7 @@ router.get('/discord/callback', async (request, response) => {
     response.redirect('/?discordSuccess=false');
     return;
   }
-  const state = await dbTokens.get(`${request.cookies.discordStateId}DiscordState`);
+  const state = await dbTokens.get(`${request.cookies.discordStateId}_DiscordState`);
   response.clearCookie('discordStateId');
   if (state != request.query.state) {
     response.redirect('/?discordSuccess=false');
