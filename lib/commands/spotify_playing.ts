@@ -7,14 +7,13 @@ export const data = new SlashCommandBuilder().setName('spotify-playing').setDesc
 
 export async function execute(interaction: ChatInputCommandInteraction) {
   const userId = interaction.user.id;
-  const accessToken = await Spotify.getAccessToken(userId);
-  if (accessToken) {
+  if (await Spotify.checkAccessToken(userId)) {
     await interaction.deferReply({ ephemeral: false });
   } else {
     await interaction.reply({ content: `${BASE_URL}auth/discord?task=spotify`, ephemeral: true });
     return;
   }
-  const track = await Spotify.currentlyPlaying(userId, false, accessToken);
+  const track = await Spotify.currentlyPlaying(userId, false);
   if (track) {
     await interaction.editReply(track);
   } else {

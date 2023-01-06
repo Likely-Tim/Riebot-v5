@@ -48,3 +48,9 @@ export async function get(key: string): Promise<string | null> {
     return null;
   }
 }
+
+export async function check(key: string): Promise<boolean> {
+  const hashedKey = createHash(HASH_ALGORITHM).update(key).digest('hex');
+  logger.info(`[Token DB] Checking if key ${hashedKey} exists`);
+  return await db.has(hashedKey);
+}

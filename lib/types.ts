@@ -173,3 +173,14 @@ export interface AnilistMediaStatusDistributionObject {
   status: 'CURRENT' | 'PLANNING' | 'COMPLETED' | 'DROPPED' | 'PAUSED' | 'REPEATING';
   amount: number;
 }
+
+export interface SpotifyExternalObject {
+  spotifyUrl: string;
+  spotifyUri: string;
+}
+
+export interface SpotifySearchResponse {
+  tracks: SpotifyExternalObject[];
+  albums: SpotifyExternalObject[];
+  artists: SpotifyExternalObject[];
+}

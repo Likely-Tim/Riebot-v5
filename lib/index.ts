@@ -5,6 +5,7 @@ import initializeServer from './server';
 import { DiscordClient, Command } from './types';
 import { refreshSlashCommands } from './slash_refresh';
 import { Collection, Events, GatewayIntentBits } from 'discord.js';
+import { reinitializeCollectors } from './utils/collector_manager';
 
 const DISCORD_CLIENT = process.env.DISCORD_TOKEN;
 
@@ -43,7 +44,7 @@ discordClient.on(Events.InteractionCreate, async (interaction) => {
 async function startup() {
   initializeServer();
   await refreshSlashCommands();
-
+  reinitializeCollectors();
   discordClient.commands = new Collection();
   const commandsPath = path.join(__dirname, './commands');
   const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith('.js'));
@@ -56,3 +57,5 @@ async function startup() {
 }
 
 discordClient.login(DISCORD_CLIENT);
+
+export default discordClient;
