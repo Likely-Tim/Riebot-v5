@@ -1,13 +1,14 @@
 import logger from './logger';
 import fetch from 'node-fetch';
-
-import * as dbTokens from './databases/tokens';
 import {
   SpotifyExternalObject,
   SpotifyRefreshTokenRequest,
   SpotifyRefreshTokenResponse,
-  SpotifySearchResponse
+  SpotifySearchResponse,
+  SpotifyTopResponse
 } from '../types';
+
+import * as dbTokens from './databases/tokens';
 
 class Spotify {
   readonly spotifyId: string;
@@ -131,6 +132,54 @@ class Spotify {
       }
       default: {
         throw new Error(`[Spotify] Failed to get search results with status: ${response.status}`);
+      }
+    }
+  }
+
+  async getTopPlayed(userId: string, type: string) {
+    logger.info(`[Spotify] Getting top played for user ${userId}`);
+    const timeRanges = {
+      shortTerm: 'short_term',
+      mediumTerm: 'medium_term',
+      longTerm: 'long_term'
+    };
+    const items: SpotifyTopResponse = {
+      shortTerm: [],
+      mediumTerm: [],
+      longTerm: []
+    };
+    for (const timeRange in timeRanges) {
+      const url = `https://api.spotify.com/v1/me/top/${type}?time_range=${
+        timeRanges[timeRange as keyof typeof timeRanges]
+      }&limit=10`;
+      items[timeRange as keyof SpotifyTopResponse] = await this.spotifyTopRequestor(url, userId);
+    }
+    return items;
+  }
+
+  async spotifyTopRequestor(url: string, userId: string): Promise<SpotifyExternalObject[]> {
+    const accessToken = await dbTokens.get(`spotifyAccess_${userId}`);
+    if (!accessToken) {
+      throw new Error(`[Spotify] Can't find access token for ${userId}`);
+    }
+    let response = await sendGetRequest(url, accessToken);
+    switch (response.status) {
+      case 200: {
+        const body = (await response.json()) as SpotifyApi.UsersTopArtistsResponse | SpotifyApi.UsersTopTracksResponse;
+        const items: SpotifyExternalObject[] = [];
+        for (const item of body.items) {
+          items.push({ spotifyUrl: item.external_urls.spotify, spotifyUri: item.uri });
+        }
+        return items;
+      }
+      case 401: {
+        logger.info(`[Spotify] Expired Token`);
+        if (await this.refreshToken(userId)) {
+          return await this.spotifyTopRequestor(url, userId);
+        }
+      }
+      default: {
+        throw new Error(`[Spotify] Failed to get top played with status: ${response.status}`);
       }
     }
   }

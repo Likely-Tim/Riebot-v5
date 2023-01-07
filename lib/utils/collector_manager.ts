@@ -1,27 +1,27 @@
-import client from '../index.js';
-import logger from './logger.js';
+import client from '../index';
+import logger from './logger';
 import { TextChannel } from 'discord.js';
-import { convertActionRowArrayToActionRowBuilderArray, disableAllRows } from './buttons.js';
+import { convertActionRowArrayToActionRowBuilderArray, disableAllRows } from './buttons';
 
 // Interactions
-import { spotifyButtonInteraction } from '../commands/spotify.js';
+import { spotifyButtonInteraction } from '../commands/spotify';
 //import { animeShowSelectInteraction, animeCharacterSelectInteraction, animeStaffSelectInteraction, animeShowButtonInteraction, animeCharacterButtonInteraction, animeVaButtonInteraction } from '../commands/anime.js';
-//import { spotifyTopButtonInteraction } from '../commands/spotify_top.js';
+import { spotifyTopButtonInteraction } from '../commands/spotify_top';
 
 //import * as dbAnime from './databases/anime.js';
 import * as dbMessages from './databases/messages.js';
 
 const COMMAND_WITH_COLLECTORS = [
-  'spotify'
-  // 'spotify-top',
+  'spotify',
+  'spotify-top'
   // 'animeShowSelect',
   // 'animeStaffSelect',
   // 'animeCharacterSelect',
   // 'anime'
 ];
 const COMMAND_MAP = {
-  spotify: spotifyButtonInteraction
-  //'spotify-top': spotifyTopButtonInteraction,
+  spotify: spotifyButtonInteraction,
+  'spotify-top': spotifyTopButtonInteraction
   //animeShowSelect: animeShowSelectInteraction,
   //animeStaffSelect: animeStaffSelectInteraction,
   //animeCharacterSelect: animeCharacterSelectInteraction,

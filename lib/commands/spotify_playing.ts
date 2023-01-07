@@ -1,4 +1,4 @@
-import Spotify from '../utils/spotify.js';
+import Spotify from '../utils/spotify';
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 
 const BASE_URL = process.env.BASE_URL;

@@ -1,6 +1,6 @@
 import Spotify from '../utils/spotify';
 import logger from '../utils/logger';
-import { SpotifySearchResponse } from '../types.js';
+import { SpotifySearchResponse } from '../types';
 import { disablePreviousCollector } from '../utils/collector_manager';
 import {
   SlashCommandBuilder,

@@ -184,3 +184,9 @@ export interface SpotifySearchResponse {
   albums: SpotifyExternalObject[];
   artists: SpotifyExternalObject[];
 }
+
+export interface SpotifyTopResponse {
+  shortTerm: SpotifyExternalObject[];
+  mediumTerm: SpotifyExternalObject[];
+  longTerm: SpotifyExternalObject[];
+}
