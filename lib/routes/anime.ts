@@ -1,8 +1,8 @@
-import { Router } from 'express';
 import * as path from 'path';
-import { AnimeAiringResponse, AnimeCurrentResponse, AnimeUsersResponse, AnimeWatchingResponse } from '../types';
+import { Router } from 'express';
 import Anilist from '../utils/anilist';
 import * as dbWeb from '../utils/databases/web';
+import { AnimeAiringResponse, AnimeCurrentResponse, AnimeUsersResponse, AnimeWatchingResponse } from '../types/web';
 
 const router = Router();
 

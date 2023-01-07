@@ -1,19 +1,18 @@
 import fetch from 'node-fetch';
 import { Router } from 'express';
+import logger from '../utils/logger';
 import Anilist from '../utils/anilist';
-import { randomStringGenerator } from '../utils/random';
 import * as discord from '../utils/discord';
-
 import * as dbWeb from '../utils/databases/web';
 import * as dbTokens from '../utils/databases/tokens';
-import logger from '../utils/logger';
+import { randomStringGenerator } from '../utils/random';
 import { RESTPostOAuth2AccessTokenResult, RESTPostOAuth2AccessTokenURLEncodedData } from 'discord.js';
 import {
   AnilistOAuthAccessTokenResponse,
   AnilistOAuthAccessTokenURLEncodedData,
   SpotifyOAuthAccessTokenResponse,
   SpotifyOAuthAccessTokenURLEncodedData
-} from '../types';
+} from '../types/auth';
 
 const router = Router();
 

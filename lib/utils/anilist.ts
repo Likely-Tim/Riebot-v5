@@ -7,7 +7,7 @@ import {
   AnilistUserWatchingListResponse,
   AnilistViewerObject,
   AnilistViewerResponse
-} from '../types';
+} from '../types/anilist';
 
 const SEASON_MAP = {
   WINTER: 'Winter',

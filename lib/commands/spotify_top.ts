@@ -1,7 +1,15 @@
 import Spotify from '../utils/spotify';
 import logger from '../utils/logger';
-import { SpotifyTopResponse } from '../types';
+import { SpotifyTopResponse } from '../types/spotify';
+import * as dbSpotifyTop from '../utils/databases/spotify_top';
 import { disablePreviousCollector } from '../utils/collector_manager';
+import {
+  ButtonOptions,
+  convertActionRowToActionRowBuilder,
+  createActionRowButtons,
+  disableButton,
+  enableButton
+} from '../utils/buttons';
 import {
   SlashCommandBuilder,
   ComponentType,
@@ -12,15 +20,6 @@ import {
   ButtonComponent,
   ActionRowBuilder
 } from 'discord.js';
-import {
-  ButtonOptions,
-  convertActionRowToActionRowBuilder,
-  createActionRowButtons,
-  disableButton,
-  enableButton
-} from '../utils/buttons';
-
-import * as dbSpotifyTop from '../utils/databases/spotify_top';
 
 const BASE_URL = process.env.BASE_URL;
 

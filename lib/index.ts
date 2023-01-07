@@ -2,7 +2,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import logger from './utils/logger';
 import initializeServer from './server';
-import { DiscordClient, Command } from './types';
+import { DiscordClient, Command } from './types/discord';
 import { refreshSlashCommands } from './slash_refresh';
 import { Collection, Events, GatewayIntentBits } from 'discord.js';
 import { reinitializeCollectors } from './utils/collector_manager';

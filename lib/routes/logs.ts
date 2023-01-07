@@ -1,7 +1,7 @@
 import * as fs from 'node:fs';
 import { Router } from 'express';
 import * as path from 'node:path';
-import { LogResponse } from '../types';
+import { LogResponse } from '../types/web';
 
 const router = Router();
 

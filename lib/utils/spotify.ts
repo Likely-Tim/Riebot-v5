@@ -1,12 +1,7 @@
 import logger from './logger';
 import fetch from 'node-fetch';
-import {
-  SpotifyExternalObject,
-  SpotifyRefreshTokenRequest,
-  SpotifyRefreshTokenResponse,
-  SpotifySearchResponse,
-  SpotifyTopResponse
-} from '../types';
+import { SpotifyRefreshTokenRequest, SpotifyRefreshTokenResponse } from '../types/auth';
+import { SpotifyExternalObject, SpotifySearchResponse, SpotifyTopResponse } from '../types/spotify';
 
 import * as dbTokens from './databases/tokens';
 

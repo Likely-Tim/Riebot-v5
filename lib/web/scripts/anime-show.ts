@@ -1,4 +1,5 @@
-import { AnilistMediaObject, AnimeAiringResponse, AnimeUsersResponse, AnimeWatchingResponse } from '../../types';
+import { AnilistMediaObject } from '../../types/anilist';
+import { AnimeAiringResponse, AnimeUsersResponse, AnimeWatchingResponse } from '../../types/web';
 
 export {};
 

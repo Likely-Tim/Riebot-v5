@@ -1,4 +1,4 @@
-import { LogResponse } from '../../types';
+import { LogResponse } from '../../types/web';
 
 sendGetRequest('/logs/currentLogs').then((response: LogResponse) => {
   generateLogButtons(response);
