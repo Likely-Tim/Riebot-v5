@@ -3,4 +3,5 @@ node_modules
 lib/secrets
 logs
 databases
+!lib/utils/databases
 media
