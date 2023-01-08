@@ -1,6 +1,7 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import logger from './utils/logger';
+import cronJobs from './scripts/cron';
 import initializeServer from './server';
 import { DiscordClient, Command } from './types/discord';
 import { refreshSlashCommands } from './slash_refresh';
@@ -45,6 +46,7 @@ async function startup() {
   initializeServer();
   await refreshSlashCommands();
   reinitializeCollectors();
+  cronJobs(discordClient);
   discordClient.commands = new Collection();
   const commandsPath = path.join(__dirname, './commands');
   const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith('.js'));
