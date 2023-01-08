@@ -53,6 +53,15 @@ app.get('/favicon.ico', (request, response) => {
   response.sendFile(__dirname + '/web/favicon/favicon.ico');
 });
 
+app.get('/user', (request, response) => {
+  const user = request.oidc.user;
+  if (user) {
+    response.send({ user: user.name });
+  } else {
+    response.send({ user: undefined });
+  }
+});
+
 app.all('*', (request, response) => {
   response.sendFile(__dirname + '/web/html/404.html');
 });
