@@ -56,7 +56,11 @@ function hamburgerHandler(event: MouseEvent) {
 
 function submenuHandler(event: MouseEvent) {
   if (event.target instanceof Element) {
-    const submenu = document.getElementsByClassName(`${event.target.id}Submenu`) as HTMLCollectionOf<HTMLElement>;
+    console.log(event.target);
+    console.log(event.target.id);
+    const id = event.target.id ? event.target.id : event.target.textContent;
+    const submenu = document.getElementsByClassName(`${id}Submenu`) as HTMLCollectionOf<HTMLElement>;
+    console.log(submenu);
     if (submenu[0].classList.contains('slideIn')) {
       for (let i = 0; i < submenu.length; i++) {
         submenu[i].classList.toggle('slideIn');
@@ -94,7 +98,7 @@ function createMenuItem(name: string, link: string) {
   dropdown.appendChild(item);
 }
 
-function createSubmenuItem(parentName: string, submenuNames: string | any[], links: any[]) {
+function createSubmenuItem(parentName: string, submenuNames: string[], links: string[]) {
   const parent = createDiv('menuItem submenuParent', parentName);
   parent.appendChild(createParagraph(parentName, 'menuParagraph', null));
   parent.appendChild(createParagraph('>', 'menuParagraph menuArrow', `${parentName}MenuArrow`));
