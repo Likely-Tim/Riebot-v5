@@ -32,6 +32,7 @@
     "endOfLine": "lf"
   },
   "dependencies": {
+    "chartjs-node-canvas": "^4.1.6",
     "cookie-parser": "^1.4.6",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",

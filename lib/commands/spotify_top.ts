@@ -1,10 +1,10 @@
 import Spotify from '../utils/spotify';
 import logger from '../utils/logger';
+import { ButtonOptions } from '../types/buttons';
 import { SpotifyTopResponse } from '../types/spotify';
 import * as dbSpotifyTop from '../utils/databases/spotify_top';
 import { disablePreviousCollector } from '../utils/collector_manager';
 import {
-  ButtonOptions,
   convertActionRowToActionRowBuilder,
   createActionRowButtons,
   disableButton,

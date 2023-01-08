@@ -1,9 +1,24 @@
 import logger from './logger';
 import fetch from 'node-fetch';
 import { QueryGeocodingResponse, ZipCodeGeocodingResponse } from '../types/weather';
+import { Date } from '../types/misc';
 
 const OPEN_WEATHER_KEY = process.env.OPEN_WEATHER_KEY;
-const ZIP_CODE_BASE_KEY = process.env.ZIP_CODE_BASE_KEY;
+
+const MONTH_MAP = {
+  1: 'Jan',
+  2: 'Feb',
+  3: 'March',
+  4: 'April',
+  5: 'May',
+  6: 'June',
+  7: 'July',
+  8: 'Aug',
+  9: 'Sept',
+  10: 'Oct',
+  11: 'Nov',
+  12: 'Dec'
+};
 
 export async function sendGetRequestGeocodingQuery(location: string) {
   logger.info(`[Geocoding] Getting Geocoding for ${location}`);
@@ -66,4 +81,25 @@ export function capitalize(text: string) {
     .split(' ')
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(' ');
+}
+
+export function dateParse(date: Date) {
+  let d: string;
+  if (date.month) {
+    const month = MONTH_MAP[date.month as keyof typeof MONTH_MAP];
+    if (date.day) {
+      if (date.year) {
+        d = `${month} ${date.day}, ${date.year}`;
+      } else {
+        d = `${month} ${date.day}`;
+      }
+    } else {
+      d = `${month} ${date.year}`;
+    }
+  } else if (date.year) {
+    d = `${date.year}`;
+  } else {
+    return 'N/A';
+  }
+  return d;
 }

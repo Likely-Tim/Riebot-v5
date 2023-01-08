@@ -1,3 +1,4 @@
+import { StringSelectMenuOptions, ButtonOptions } from '../types/buttons';
 import {
   ActionRow,
   ActionRowBuilder,
@@ -32,7 +33,7 @@ const characterButton = new ButtonBuilder()
   .setStyle(ButtonStyle.Secondary);
 const vaButton = new ButtonBuilder().setCustomId('va').setLabel('va').setStyle(ButtonStyle.Secondary);
 
-const buttonsMap = {
+export const buttonsMap = {
   next: nextButton,
   prev: prevButton,
   track: trackButton,
@@ -47,17 +48,6 @@ const buttonsMap = {
   character: characterButton,
   va: vaButton
 };
-
-export interface ButtonOptions {
-  name: keyof typeof buttonsMap;
-  disabled: boolean;
-  label?: string;
-}
-
-export interface StringSelectMenuOptions {
-  label: string;
-  value: string;
-}
 
 export function convertActionRowToActionRowBuilder(actionRow: ActionRow<MessageActionRowComponent>) {
   const actionRowBuilder = ActionRowBuilder.from(actionRow) as ActionRowBuilder<MessageActionRowComponentBuilder>;
@@ -143,13 +133,6 @@ export function enableButton(actionRow: ActionRowBuilder<ButtonBuilder>, buttonC
 
 export function getSelectActionRow(options: StringSelectMenuOptions[]) {
   const select = new StringSelectMenuBuilder().setCustomId('selectMenu').setPlaceholder('Nothing Selected');
-  const choices = [];
-  for (const option of options) {
-    choices.push({
-      label: String(option.label),
-      value: String(option.value)
-    });
-  }
-  select.addOptions(choices);
-  return new ActionRowBuilder().addComponents(select);
+  select.addOptions(options);
+  return new ActionRowBuilder().addComponents(select) as ActionRowBuilder<StringSelectMenuBuilder>;
 }
