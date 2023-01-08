@@ -28,7 +28,7 @@ const authConfig = {
   secret: AUTH0_SECRET,
   baseURL: BASE_URL,
   clientID: AUTH0_CLIENT_ID,
-  issuerBaseURL: 'https://riebot-v3.us.auth0.com'
+  issuerBaseURL: 'https://riebot.us.auth0.com'
 };
 
 app.use(auth(authConfig));

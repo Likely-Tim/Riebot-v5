@@ -57,3 +57,6 @@ pm2 list
 pm2 start index.js --name Riebot-v5 --time --restart-delay=3000
 pm2 kill
 ```
+
+# Add Bot to Server
+https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&permissions=8&scope=bot%20applications.commands
