@@ -19,7 +19,7 @@ createSubmenuItem('Anime', ['Shows'], ['/anime/show']);
 hamburger.appendChild(dropdown);
 header.appendChild(hamburger);
 
-const title = createParagraph('Riebot v3', null, 'navBarTitle');
+const title = createParagraph('Riebot', null, 'navBarTitle');
 title.addEventListener('click', redirectHome);
 header.appendChild(title);
 
