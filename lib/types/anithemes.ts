@@ -11,7 +11,7 @@ export interface AnithemesSearchAnilistId {
       };
       animethemeentries: {
         episodes: string;
-        videos: {
+        videos?: {
           link: string;
         }[];
       }[];
@@ -24,5 +24,5 @@ export interface ThemeObject {
   title: string;
   artists: string;
   episodes: string;
-  videoUrl: string;
+  videoUrl: string | null;
 }

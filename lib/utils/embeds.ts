@@ -169,10 +169,18 @@ export function buildOpAndEd(opAndEd: ThemeObject[], title: string, url: string,
   const opSongs = [];
   const edSongs = [];
   for (const song of opAndEd) {
-    if (song.type === 'ED') {
-      edSongs.push(`[${song.title} by ${song.artists}](${song.videoUrl}) [EP: ${song.episodes}]`);
+    if (song.videoUrl) {
+      if (song.type === 'ED') {
+        edSongs.push(`[${song.title} by ${song.artists}](${song.videoUrl}) [EP: ${song.episodes}]`);
+      } else {
+        opSongs.push(`[${song.title} by ${song.artists}](${song.videoUrl}) [EP: ${song.episodes}]`);
+      }
     } else {
-      opSongs.push(`[${song.title} by ${song.artists}](${song.videoUrl}) [EP: ${song.episodes}]`);
+      if (song.type === 'ED') {
+        edSongs.push(`${song.title} by ${song.artists} [EP: ${song.episodes}]`);
+      } else {
+        opSongs.push(`${song.title} by ${song.artists} [EP: ${song.episodes}]`);
+      }
     }
   }
   let description = '';

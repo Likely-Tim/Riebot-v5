@@ -26,7 +26,7 @@ class Anithemes {
           title: theme.song.title,
           artists: artists.join(','),
           episodes: theme.animethemeentries[0].episodes,
-          videoUrl: theme.animethemeentries[0].videos[0].link
+          videoUrl: theme.animethemeentries[0].videos ? theme.animethemeentries[0].videos[0].link : null
         });
       }
       return themeObjects;
