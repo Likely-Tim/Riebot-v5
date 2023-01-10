@@ -14,7 +14,14 @@ const animeShowUsers = new Keyv({
   store: new KeyvFile({
     filename: path.join(__dirname, '..', '..', '..', 'databases', 'web.json')
   }),
-  namespace: 'users'
+  namespace: 'animeUsers'
+});
+
+const animeShowCache = new Keyv({
+  store: new KeyvFile({
+    filename: path.join(__dirname, '..', '..', '..', 'databases', 'web.json')
+  }),
+  namespace: 'animeShowCache'
 });
 
 export async function set(key: string, value: string): Promise<void> {
@@ -64,4 +71,26 @@ export async function getAllAnimeShowUser(): Promise<[string, string][] | null> 
     logger.error(`[Web DB] Error getting anime show users`);
     return null;
   }
+}
+
+export async function setAnimeShowCache(key: string, value: Object): Promise<void> {
+  logger.info(`[Web DB] Setting key '${key}'`);
+  await animeShowCache.set(key, value, 8.64e7);
+  logger.info(`[Web DB] Set key, value`);
+}
+
+export async function getAnimeShowCache(key: string): Promise<Object | null> {
+  try {
+    logger.info(`[Web DB] Getting value with key ${key}`);
+    const value = await animeShowCache.get(key);
+    logger.info(`[Web DB] Got value`);
+    return value;
+  } catch (error) {
+    logger.error(`[Web DB] Error getting value with key ${key}`);
+    return null;
+  }
+}
+
+export async function checkAnimeShowCache(key: string): Promise<boolean> {
+  return animeShowCache.has(key);
 }

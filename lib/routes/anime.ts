@@ -3,6 +3,7 @@ import { Router } from 'express';
 import Anilist from '../utils/anilist';
 import * as dbWeb from '../utils/databases/web';
 import { AnimeAiringResponse, AnimeCurrentResponse, AnimeUsersResponse, AnimeWatchingResponse } from '../types/web';
+import { AnilistMediaObject } from '../types/anilist';
 
 const router = Router();
 
@@ -22,7 +23,13 @@ router.get('/show/airing', async (request, response) => {
   const startTime = parseInt(request.query.start as string);
   const endTime = parseInt(request.query.end as string);
   if (startTime && endTime) {
-    const media = await Anilist.getAnimeAiringBetweenTimes(startTime, endTime);
+    let media: AnilistMediaObject[] | null;
+    if (!(await dbWeb.checkAnimeShowCache(`AnimeShow-${startTime}-${endTime}`))) {
+      media = await Anilist.getAnimeAiringBetweenTimes(startTime, endTime);
+      dbWeb.setAnimeShowCache(`AnimeShow-${startTime}-${endTime}`, media ? media : []);
+    } else {
+      media = (await dbWeb.getAnimeShowCache(`AnimeShow-${startTime}-${endTime}`)) as AnilistMediaObject[] | null;
+    }
     const data: AnimeAiringResponse = {
       media: media ? media : []
     };
