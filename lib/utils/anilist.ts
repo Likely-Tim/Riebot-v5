@@ -11,6 +11,7 @@ import {
   AnilistCharacterVa,
   AnilistMedia,
   AnilistMediaObject,
+  AnilistMediaObjectWithProgress,
   AnilistMediaResponse,
   AnilistSearchAnimeResponse,
   AnilistSearchCharacterResponse,
@@ -828,6 +829,7 @@ class Anilist {
         MediaListCollection(userId: ${userId}, type: ANIME, forceSingleCompletedList: true, status: CURRENT) {
           lists {
             entries {
+              progress
               media {
                 popularity
                 format
@@ -879,10 +881,21 @@ class Anilist {
     if (response.ok) {
       logger.info(`[Anilist] Got Anime Watching List`);
       const body = (await response.json()) as AnilistUserWatchingListResponse;
-      const medias: AnilistMediaObject[] = [];
+      const medias: AnilistMediaObjectWithProgress[] = [];
       if (body.data.MediaListCollection.lists.length !== 0) {
         for (const media of body.data.MediaListCollection.lists[0].entries) {
-          medias.push(media.media);
+          medias.push({
+            progress: media.progress,
+            format: media.media.format,
+            title: media.media.title,
+            episodes: media.media.episodes,
+            nextAiringEpisode: media.media.nextAiringEpisode,
+            airingSchedule: media.media.airingSchedule,
+            coverImage: media.media.coverImage,
+            siteUrl: media.media.siteUrl,
+            stats: media.media.stats,
+            popularity: media.media.popularity
+          });
         }
         return medias;
       } else {

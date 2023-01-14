@@ -34,7 +34,12 @@ export interface AnilistMediaWrapper {
 export interface AnilistUserWatchingListResponse {
   data: {
     MediaListCollection: {
-      lists: [{ entries: AnilistMediaWrapper[] }] | [];
+      lists: {
+        entries: {
+          progress: number;
+          media: AnilistMediaObject;
+        }[];
+      }[];
     };
   };
 }
@@ -74,6 +79,10 @@ export interface AnilistGetAnimeMediaObject extends AnilistMediaObject {
       id: number;
     }[];
   };
+}
+
+export interface AnilistMediaObjectWithProgress extends AnilistMediaObject {
+  progress: number;
 }
 
 export interface AnilistMediaObject {

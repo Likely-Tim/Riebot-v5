@@ -1,4 +1,4 @@
-import { AnilistMediaObject } from '../../types/anilist';
+import { AnilistMediaObject, AnilistMediaObjectWithProgress } from '../../types/anilist';
 import { AnimeAiringResponse, AnimeUsersResponse, AnimeWatchingResponse } from '../../types/web';
 
 export {};
@@ -51,8 +51,8 @@ function displayUserAnime(userId: string) {
     try {
       document.getElementsByTagName('main')[0].removeChild(document.getElementById('dayContainer')!);
     } catch (error) {}
-    const mediaArray = mediaByDay(response.media);
-    const sortedMediaArray = sortByPopularity(mediaArray);
+    const mediaArray = mediaByDay(response.media) as AnilistMediaObjectWithProgress[][];
+    const sortedMediaArray = sortByPopularity(mediaArray) as AnilistMediaObjectWithProgress[][];
     mediaGenerateHtml(sortedMediaArray);
     document.getElementById('loading')!.style.display = 'none';
   });
@@ -119,7 +119,7 @@ const numberToDiv = {
   9: 'Unending'
 };
 
-function mediaGenerateHtml(mediaArray: AnilistMediaObject[][]) {
+function mediaGenerateHtml(mediaArray: AnilistMediaObject[][] | AnilistMediaObjectWithProgress[][]) {
   generateDayHtml(mediaArray);
   for (let dayId = 0; dayId < mediaArray.length; dayId++) {
     let day = numberToDiv[dayId as keyof typeof numberToDiv] + '_Covers';
@@ -135,6 +135,20 @@ function mediaGenerateHtml(mediaArray: AnilistMediaObject[][]) {
       image.setAttribute('src', mediaArray[dayId][i].coverImage.extraLarge!);
       image.setAttribute('class', 'covers');
       anchor.appendChild(image);
+      console.log(mediaArray[dayId][i]);
+      // @ts-ignore
+      if (mediaArray[dayId][i].progress !== undefined) {
+        // @ts-ignore
+        const progress: number = mediaArray[dayId][i].progress;
+        if (progress + 1 < mediaArray[dayId][i].nextAiringEpisode?.episode!) {
+          console.log(mediaArray[dayId][i].title.romaji);
+          console.log(progress);
+          console.log(mediaArray[dayId][i].nextAiringEpisode?.episode);
+          let bar = document.createElement('div');
+          bar.setAttribute('class', 'redBar');
+          div.appendChild(bar);
+        }
+      }
       div.appendChild(anchor);
       parent.appendChild(div);
     }

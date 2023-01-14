@@ -18,6 +18,15 @@ div.day {
     color: #e6e1e1;
 }
 
+div.redBar {
+    height: 5px;
+    position: absolute;
+    bottom: 6px;
+    width: 100%;
+    border-radius: 0 0 20px 20px;
+    background-color: red;
+}
+
 h2 {
     padding: 10px;
     background-color: #252629;
@@ -34,6 +43,7 @@ div.covers {
 div.cover {
     background-color: #252629;
     margin: 10px;
+    position: relative;
 }
 
 div#Future {

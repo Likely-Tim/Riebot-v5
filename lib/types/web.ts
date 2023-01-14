@@ -1,4 +1,4 @@
-import { AnilistMediaObject } from '../types/anilist';
+import { AnilistMediaObject, AnilistMediaObjectWithProgress } from '../types/anilist';
 
 export interface LogResponse {
   logNames: string[];
@@ -17,5 +17,5 @@ export interface AnimeUsersResponse {
 }
 
 export interface AnimeWatchingResponse {
-  media: AnilistMediaObject[];
+  media: AnilistMediaObjectWithProgress[];
 }
