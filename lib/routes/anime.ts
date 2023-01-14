@@ -2,6 +2,7 @@ import * as path from 'path';
 import { Router } from 'express';
 import Anilist from '../utils/anilist';
 import * as dbWeb from '../utils/databases/web';
+import * as dbTokens from '../utils/databases/tokens';
 import { AnimeAiringResponse, AnimeCurrentResponse, AnimeUsersResponse, AnimeWatchingResponse } from '../types/web';
 import { AnilistMediaObject } from '../types/anilist';
 
@@ -45,6 +46,21 @@ router.get('/show/users', async (request, response) => {
     users: users ? users : []
   };
   response.send(data);
+});
+
+router.post('/show/update', async (request, response) => {
+  console.log(request.oidc.user!.name);
+  const userId = await dbTokens.get(`anilist_${request.oidc.user!.name}`);
+  if (String(userId) !== String(request.body.userId)) {
+    response.sendStatus(401);
+    return;
+  }
+  const accessToken = await dbTokens.get(`anilist_${userId}`);
+  if (await Anilist.updateMedia(accessToken!, request.body.mediaId, request.body.progress)) {
+    response.sendStatus(200);
+  } else {
+    response.sendStatus(500);
+  }
 });
 
 router.get('/show/watching', async (request, response) => {

@@ -6,6 +6,38 @@ div#dayContainer {
     justify-content: center;
 }
 
+div#timeContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 20px;
+    margin-right: 20px;
+    justify-content: center;
+}
+
+div#timeMediaContainer {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    background-color: #252629;
+    align-self: flex-start;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 30px;
+    color: #e6e1e1;
+}
+
+div#timeNotAiringMediaContainer {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    background-color: #252629;
+    align-self: flex-start;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 30px;
+    color: #e6e1e1;
+}
+
 div.day {
     display: flex;
     flex-direction: column;
@@ -25,6 +57,16 @@ div.redBar {
     width: 100%;
     border-radius: 0 0 20px 20px;
     background-color: red;
+}
+
+button.plusButton {
+    position: absolute;
+    bottom: 15px;
+    height: 25px;
+    width: 25px;
+    border-radius: 100px;
+    right: 5px;
+    color: white;
 }
 
 h2 {
@@ -70,6 +112,14 @@ a {
 }
 
 div#choiceButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+div#sortButtonContainer {
     display: flex;
     justify-content: center;
     align-content: center;

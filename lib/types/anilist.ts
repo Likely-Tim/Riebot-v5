@@ -86,6 +86,7 @@ export interface AnilistMediaObjectWithProgress extends AnilistMediaObject {
 }
 
 export interface AnilistMediaObject {
+  id: number;
   format: 'TV' | 'TV_SHORT' | 'MOVIE' | 'SPECIAL' | 'OVA' | 'ONA' | 'MUSIC' | 'MANGA' | 'NOVEL' | 'ONE_SHOT';
   title: AnilistMediaTitleObject;
   episodes: number | null;

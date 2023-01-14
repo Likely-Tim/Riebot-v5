@@ -133,6 +133,7 @@ router.get('/spotify/callback', async (request, response) => {
 router.get('/anilist/callback', async (request, response) => {
   const task = request.cookies.task;
   const redirectUrl = request.cookies.redirectUrl;
+  const name = request.oidc.user!.name;
   response.clearCookie('task');
   response.clearCookie('redirectUrl');
   if (typeof request.query.code !== 'string') {
@@ -150,7 +151,21 @@ router.get('/anilist/callback', async (request, response) => {
       response.redirect('/?anilistSuccess=false');
       return;
     } else {
-      await dbWeb.setAnimeShowUser(String(user.id), user.name);
+      let exists = false;
+      const existingUsers = await dbWeb.getAllAnimeShowUser();
+      if (existingUsers) {
+        for (const existingUser of existingUsers) {
+          if (existingUser[0] === String(user.id)) {
+            exists = true;
+            break;
+          }
+        }
+      }
+      if (!exists) {
+        await dbTokens.set(`anilist_${name}`, String(user.id));
+        await dbTokens.set(`anilist_${String(user.id)}`, accessToken);
+        await dbWeb.setAnimeShowUser(String(user.id), user.name);
+      }
     }
   }
   if (redirectUrl) {

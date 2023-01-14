@@ -647,6 +647,24 @@ class Anilist {
     }
   }
 
+  async updateMedia(accessToken: string, mediaId: String, progress: number) {
+    logger.info(`[Anilist] Updating ${mediaId} with progress ${progress}`);
+    const search = `
+      mutation {
+        SaveMediaListEntry(mediaId: ${mediaId}, progress: ${progress}) {
+          progress
+        }
+      }
+    `;
+    const url = 'https://graphql.anilist.co';
+    let response = await sendAuthenticatedPostRequest(url, search, accessToken);
+    if (response.ok) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   async getAuthenticatedUser(accessToken: string): Promise<AnilistViewerObject | null> {
     logger.info(`[Anilist] Get Authenticated User`);
     const search = `
@@ -831,6 +849,7 @@ class Anilist {
             entries {
               progress
               media {
+                id
                 popularity
                 format
                 title {
@@ -885,6 +904,7 @@ class Anilist {
       if (body.data.MediaListCollection.lists.length !== 0) {
         for (const media of body.data.MediaListCollection.lists[0].entries) {
           medias.push({
+            id: media.media.id,
             progress: media.progress,
             format: media.media.format,
             title: media.media.title,
